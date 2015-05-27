@@ -561,13 +561,343 @@ link.addEventListener('click', function(e){
 
 jQuery is just a JavaScript library, or set of helpful add-ons, to the JavaScript programming language. 
 
-It takes a while to become comfortable with JavaScript, and it's trickier to manipulate HTML elements directly with JavaScript than with jQuery.
+Makes it easy to manipulate a page of HTML after it's displayed by the browser. It also provides tools that help you listen for a user to interact with your page, tools that help you create animations in your page, etc.
 
 jQuery provides a simple interface for the underlying JavaScript.
 
+----------
 
+## Selectors
+
+A selector is a function which makes use of expressions to find out matching elements from a DOM based on the given criteria. Simply you can say, selectors are used to select one or more HTML elements. Once an element is selected then we can perform various operations on that selected element.
+
+For a full list of all jQuery selectors, see the following page in the official jQuery documentation: 
+[jQuery Selectors](http://api.jquery.com/category/selectors/)
+
+A jQuery selector is a string which specifies which HTML elements to select. The selector string is passed to the $() or jQuery() selection function which returns a collection of the selected elements.
+The selector syntax is the same as CSS selectors.
+
+jQuery lets you select elements based on the following criteria:
+
+ - Element name
+ - Element id
+ - Element CSS class
+ - Element attributes
+ - Element visibility
+ - Element order
+ - Form Fields
+ - Element parents or children
+ - Combinations of the above
+
+###Others selection methods:
+
+**Find:** The selection set returned by the `$()` or `jQuery()` functions contains a function called `find()`. The `find()` function can be used to find descendants of elements in the selection set.
+
+    <!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <title>find demo</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    </head>
+    <body>
+    <p class="findExample first">Morbi luctus <strong>lorem in nulla</strong> varius, sit amet egestas felis consectetur.</p>
+    
+    <p class="findExample second">Duis fermentum euismod orci, nec accumsan velit iaculis quis. <strong>Morbi</strong> a feugiat arcu, ac sagittis nunc. <strong>Curabitur</strong> nec lacinia <strong>diam</strong>.</p>
+    </body>
+    </html>
+
+Example:
+
+    $('p.findExample.second').find('strong').css('color','blue');
+
+**Parent:** Get the parent of each element in the current set of matched elements, optionally filtered by a selector.
+This method is similar to `.parents()`, except `.parent()` only travels a single level up the DOM tree.
+
+Example: 
+
+    $('strong').parent('.first').css('color', 'red');
+
+**Parents:** Get the ancestors of each element in the current set of matched elements, optionally filtered by a selector.
+
+Example:
+
+    $('strong').parents().css('border', '1px solid blue');
+
+**Children:** Get the children of each element in the set of matched elements, optionally filtered by a selector.
+
+Example:
+
+    $('p').children('strong').css('color', 'pink');
+
+###Shortcut selectors
+
+**Fom selectors:** jQuery contains a set of form field selectors which makes it easier to select the various different types of form fields from the DOM.
+
+The most common field selectors are:
+
+ - :input
+ - :text
+ - :radio
+ - :checkbox
+ - :button
+
+Usage:
+
+    <!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <title>find demo</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      <style>
+      .font-xxs {font-size: 12px;}
+      .font-xs {font-size: 14px;}
+	  .font-md {font-size: 18px;}
+	  .color-red {color: red;}
+	  .color-blue {color: blue;}
+	  .color-green {color: green;}
+      </style>
+    </head>
+    <body>
+
+     <form method="post">
+		 <fieldset>
+			 <legend>Personal data</legend>
+			 <label class="font-xs color-blue">First Name<input type="text" name="firstName" placeholder="Your first name"></label>
+			 <label class="font-xs color-blue">Last Name<input type="text" name="lastName" placeholder="Your last name"></label>
+		 </fieldset>
+		 <fieldset>
+			 <legend>Preferences</legend>
+			 <label class="font-md color-red"><input type="checkbox" name="preference" value="movies"> Movies</label>
+			 <label class="font-md color-red"><input type="checkbox" name="preference" value="music" checked> Music</label>
+			 <label class="font-md color-red"><input type="checkbox" name="preference" value="dance"> Dance</label>
+		 </fieldset>
+		 <input type="submit" value="Submit">
+     </form>    
+
+    </body>
+    </html>
+
+Example:
+
+    $(':text').css('background-color', 'gray');
+
+*Reference:* [jQuery Selectors](http://api.jquery.com/category/selectors/)
+
+----------
+
+##Accessing to DOM:
+
+JQuery provides methods to manipulate DOM in efficient way. You do not need to write big code to modify the value of any element's attribute or to extract HTML code from a paragraph or division.
+
+We can remove, add or replace a complete DOM element with the specified HTML or DOM elements.
+
+###DOM Manipulation Methods:
+
+**after():**  Inserts HTML after the selected element (outside the element).
+
+Example: 
+`$(':text[name="firstName"]').after('*');`
+
+**addClass() / removeClass():** Adds / remove a single class, multiple classes, or all classes from each element in the set of matched elements.
+
+Examples: 
+
+    $('.font-xs').addClass('color-green');
+    $('label').removeClass('color-blue');
+
+**attr():** Get the value of an attribute for the first element in the set of matched elements or set one or more attributes for every matched element.
+
+Example: 
+
+    var lastNamePlaceholder = $(':text[name="lastName"]').attr('placeholder');
+    console.log(lastNamePlaceholder);
+    
+    $(':text[name="firstName"]').attr('placeholder', 'Please, your first name');
+
+**append():** Inserts new HTML into the end of the selected HTML element. The new HTML is concatenated with the HTML the element had already.
+
+Example:
+
+    $('fieldset').append('<p>Pellentesque euismod nunc non convallis mattis.</p>');
+
+**before():** Inserts HTML before the selected element (outside the element).
+
+Example: 
+`$(':text').before(': ');`
+
+**detach():** Is the same as `.remove()`, except that `.detach()` keeps all jQuery data associated with the removed elements. This method is useful when removed elements are to be reinserted into the DOM at a later time.
+
+Example:
+
+    // selector caching
+    var $firstNameField = $(':input[name="firstName"]').parent();
+    
+    // remove from DOM
+    $firstNameField.detach();
+    
+    // remove color blue class and add new class
+    $firstNameField.removeClass('color-blue').addClass('color-red');
+    
+    // re-insert into DOM
+    $(':text[name="lastName"]').parent().after($firstNameField);
+
+**empty():** Removes all child elements of the selected HTML element.
+
+Example: 
+`$('label.font-xs').empty();`
+
+**prop():** Get the value of a property for the first element in the set of matched elements or set one or more properties for every matched element. It should be used when properties contain only two possible values true or false, such as "checked", "selected", "disabled", etc.
+
+Example:
+
+    // selectors caching
+    var $musicField = $(':checkbox[value="music"]');
+    var $lastNameField = $(':text[name="lastName"]');
+    
+    // return checked property
+    console.log($musicField.prop('checked'));
+    
+    // disable last name field
+    $lastNameField.prop('disabled', true);
+
+**remove():** Remove the set of matched elements from the DOM. Use `.remove()` when you want to remove the element itself, as well as everything inside it.
+
+Example: 
+`$('label.font-xs').remove();`
+
+**removeAttr():** Remove an attribute from each element in the set of matched elements.
+
+Example: 
+`$(':text[name="firstName"]').removeAttr('placeholder');`
+
+**wrap():** The `wrap()` method can wrap the selected HTML element in another HTML element.
+
+Example: 
+`$('label.font-xs').wrap('<div>');` 
+
+*Reference:* [jQuery Manipulation](http://api.jquery.com/category/manipulation/)
+
+---
+
+##Events
+jQuery makes it straightforward to set up event-driven responses on page elements. These events are often triggered by the end user's interaction with the page, such as when text is entered into a form element or the mouse pointer is moved. 
+
+In some cases, such as the page load and unload events, the browser itself will trigger the event.
+
+We could define six major groups related to:
+
+ 1. Browser
+ 2. Document
+ 3. Handler Attachment
+ 4. Form
+ 5. Keyboard
+ 6. Mouse
+
+###Browser events
+
+**error():** The `error()` event is sent to elements, such as images, that are referenced by a document and loaded by the browser. It is called if the element was not loaded correctly.
+
+Example HTML:
+
+    <!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <title>find demo</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      <style>
+    	  img {
+    		width: 85px;
+    		height: 85px;
+    		border: 1px solid #E1E1E1;
+    		padding: 5px;
+    	}
+      </style>
+    </head>
+    <body>
+    
+    <img alt="Some image" src="fhfkh.gif">
+    <img alt="Some image" src="https://www.google.com.ar/images/srpr/logo11w.png">
+    <img alt="Some image" src="fhfkh.gif">
+    
+    </body>
+    </html>
+
+Usage:
+
+    $('img').error(function () {
+      $(this).attr('src', 'https://browshot.com/static/images/not-found.png');
+    });
+
+**resize():** The `resize` event is sent to the window element when the size of the browser window changes.
+
+Example: 
+
+    $(window).resize(function () {
+    	console.log('window size changed!');
+    });
+
+**scroll():** The scroll event is sent to an element when the user scrolls to a different place in the element.
+
+###Document events
+
+**load():** The `load` event is sent to an element when it and all sub-elements have been completely loaded. This event can be sent to any element associated with a URL: images, scripts, frames, iframes, and the window object. **Deprecated: use .on('load', handler)**
+
+**ready():** The document ready event signals that the DOM of the page is now ready, so you can manipulate it without worrying that parts of the DOM has not yet been created. The document ready event fires before all images etc. are loaded, but after the whole DOM itself is ready.
+
+Usage:
+
+    $(document).ready(function () {
+    	console.log('DOM is fully loaded');
+    });
+
+**unload():** The `unload` event is sent to the window element when the user navigates away from the page. **Deprecated: use .on('unload', handler)**
+
+###Handler Attachment
+
+ - on()
+ - off()
+ - one()
+ - trigger()
+ - jQuery.proxy()
+
+###Form events
+
+ - blur()
+ - change()
+ - focus()
+ - select()
+ - submit()
+
+###Keyboad events
+
+ - keydown()
+ - keypress()
+ - keyup()
+
+###Mouse events
+
+ - click()
+ - hover()
+ - dbclick()
+ - mouserover()
+
+events / on / off / one / proxy / trigger
+
+---
+
+modifiers css / attr / prop / data / toggle
+
+---
+
+ajax / post / get / shortcuts
+
+---
+
+utils parse / extend / each / 
 
 ----------
 **References:**
 [jQuery Documentation](http://api.jquery.com/)
-
