@@ -182,7 +182,7 @@ crazyFireman.getAge();
 crazyFireman.getFullName();
 ```
 
-**Referencias**
+**References**
 [Introduction to Object-Oriented JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript) 
 [OOP In JavaScript: What You NEED to Know](http://javascriptissexy.com/oop-in-javascript-what-you-need-to-know/) 
 [Object-Oriented Javascript](http://nefariousdesigns.co.uk/object-oriented-javascript.html)
