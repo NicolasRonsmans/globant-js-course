@@ -498,7 +498,7 @@ pubsub.unsubscribe(subscription);
 pubsub.publish("inbox/newMessage", "Hello! are you still there?");
 ```
 
-###Revelation Pattern###
+###Revelation Pattern
 It is about having private methods, which you also expose as public methods.
 
 ```javascript
@@ -526,7 +526,7 @@ console.log(Person.getFormalName());
 console.log(Person.getFullName());
 ```
 
-###Facade Pattern###
+###Facade Pattern
 Provides a simplified interface to a large body of code.
 
 ```javascript
@@ -546,15 +546,45 @@ link.addEventListener('click', function(e){
 });
 ```
 
-###The Prototype Pattern###
+###The Prototype Pattern
 
+The prototype pattern focuses on creating an object that can be used as a blueprint for other objects through prototypal inheritance. This pattern is inherently easy to work with in JavaScript because of the native support for prototypal inheritance in JS which means we don't need to spend time or effort imitating this topology.
+
+Example:
+```javascript
+var Person = function Person (name, lastName) {
+	var _name = name,
+		_lastName = lastName;
+		
+	this.getName = function getName () {
+		return _name;
+	};
+	
+	this.getFullName = function getFullName () {
+		return _name + ' ' + _lastName;
+	};
+};
+
+var Profesor = function Profesor () {
+	var department = 'Maths';
+	
+	this.getDepartment = function getDepartment () {
+		return department;
+	};
+};
+Profesor.prototype = new Person('Marcos', 'Andrade');
+
+var pf = new Profesor();
+console.log(pf.getFullName());
+console.log(pf.getDepartment());
+```
 
 ----------
 
 **References:**
 [Learning JavaScript Design Patterns](http://addyosmani.com/resources/essentialjsdesignpatterns/book/) 
 [JS Patterns](http://shichuan.github.io/javascript-patterns/)
-
+[JavaScript Design Patterns](https://carldanley.com/javascript-design-patterns/)
 
 ----------
 #Introduction to jQuery#
@@ -591,44 +621,52 @@ jQuery lets you select elements based on the following criteria:
 
 ###Others selection methods:
 
-**Find:** The selection set returned by the `$()` or `jQuery()` functions contains a function called `find()`. The `find()` function can be used to find descendants of elements in the selection set.
+**.find():** The selection set returned by the `$()` or `jQuery()` functions contains a function called `find()`. The `find()` function can be used to find descendants of elements in the selection set.
 
-    <!doctype html>
-    <html lang="en">
-    <head>
-      <meta charset="utf-8">
-      <title>find demo</title>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    </head>
-    <body>
-    <p class="findExample first">Morbi luctus <strong>lorem in nulla</strong> varius, sit amet egestas felis consectetur.</p>
-    
-    <p class="findExample second">Duis fermentum euismod orci, nec accumsan velit iaculis quis. <strong>Morbi</strong> a feugiat arcu, ac sagittis nunc. <strong>Curabitur</strong> nec lacinia <strong>diam</strong>.</p>
-    </body>
-    </html>
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>find demo</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body>
+<p class="findExample first">Morbi luctus <strong>lorem in nulla</strong> varius, sit amet egestas felis consectetur.</p>
+
+<p class="findExample second">Duis fermentum euismod orci, nec accumsan velit iaculis quis. <strong>Morbi</strong> a feugiat arcu, ac sagittis nunc. <strong>Curabitur</strong> nec lacinia <strong>diam</strong>.</p>
+</body>
+</html>
+```
 
 Example:
+```javascript
+$('p.findExample.second').find('strong').css('color','blue');
+```
 
-    $('p.findExample.second').find('strong').css('color','blue');
-
-**Parent:** Get the parent of each element in the current set of matched elements, optionally filtered by a selector.
+**.parent():** Get the parent of each element in the current set of matched elements, optionally filtered by a selector.
 This method is similar to `.parents()`, except `.parent()` only travels a single level up the DOM tree.
 
 Example: 
+```javascript
+$('strong').parent('.first').css('color', 'red');
+```
 
-    $('strong').parent('.first').css('color', 'red');
-
-**Parents:** Get the ancestors of each element in the current set of matched elements, optionally filtered by a selector.
-
-Example:
-
-    $('strong').parents().css('border', '1px solid blue');
-
-**Children:** Get the children of each element in the set of matched elements, optionally filtered by a selector.
+**.parents():** Get the ancestors of each element in the current set of matched elements, optionally filtered by a selector.
 
 Example:
 
-    $('p').children('strong').css('color', 'pink');
+```javascript
+$('strong').parents().css('border', '1px solid blue');
+```
+
+**.children():** Get the children of each element in the set of matched elements, optionally filtered by a selector.
+
+Example:
+
+```javascript
+$('p').children('strong').css('color', 'pink');
+```
 
 ###Shortcut selectors
 
@@ -644,44 +682,47 @@ The most common field selectors are:
 
 Usage:
 
-    <!doctype html>
-    <html lang="en">
-    <head>
-      <meta charset="utf-8">
-      <title>find demo</title>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-      <style>
-      .font-xxs {font-size: 12px;}
-      .font-xs {font-size: 14px;}
-	  .font-md {font-size: 18px;}
-	  .color-red {color: red;}
-	  .color-blue {color: blue;}
-	  .color-green {color: green;}
-      </style>
-    </head>
-    <body>
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>find demo</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <style>
+  .font-xxs {font-size: 12px;}
+  .font-xs {font-size: 14px;}
+  .font-md {font-size: 18px;}
+  .color-red {color: red;}
+  .color-blue {color: blue;}
+  .color-green {color: green;}
+  </style>
+</head>
+<body>
 
-     <form method="post">
-		 <fieldset>
-			 <legend>Personal data</legend>
-			 <label class="font-xs color-blue">First Name<input type="text" name="firstName" placeholder="Your first name"></label>
-			 <label class="font-xs color-blue">Last Name<input type="text" name="lastName" placeholder="Your last name"></label>
-		 </fieldset>
-		 <fieldset>
-			 <legend>Preferences</legend>
-			 <label class="font-md color-red"><input type="checkbox" name="preference" value="movies"> Movies</label>
-			 <label class="font-md color-red"><input type="checkbox" name="preference" value="music" checked> Music</label>
-			 <label class="font-md color-red"><input type="checkbox" name="preference" value="dance"> Dance</label>
-		 </fieldset>
-		 <input type="submit" value="Submit">
-     </form>    
+ <form method="post">
+	 <fieldset>
+		 <legend>Personal data</legend>
+		 <label class="font-xs color-blue">First Name<input type="text" name="firstName" placeholder="Your first name"></label>
+		 <label class="font-xs color-blue">Last Name<input type="text" name="lastName" placeholder="Your last name"></label>
+	 </fieldset>
+	 <fieldset>
+		 <legend>Preferences</legend>
+		 <label class="font-md color-red"><input type="checkbox" name="preference" value="movies"> Movies</label>
+		 <label class="font-md color-red"><input type="checkbox" name="preference" value="music" checked> Music</label>
+		 <label class="font-md color-red"><input type="checkbox" name="preference" value="dance"> Dance</label>
+	 </fieldset>
+	 <input type="submit" value="Submit">
+ </form>    
 
-    </body>
-    </html>
+</body>
+</html>
+```
 
 Example:
-
-    $(':text').css('background-color', 'gray');
+```javascript
+$(':text').css('background-color', 'gray');
+```
 
 *Reference:* [jQuery Selectors](http://api.jquery.com/category/selectors/)
 
@@ -695,87 +736,100 @@ We can remove, add or replace a complete DOM element with the specified HTML or 
 
 ###DOM Manipulation Methods:
 
-**after():**  Inserts HTML after the selected element (outside the element).
+**.after():**  Inserts HTML after the selected element (outside the element).
 
 Example: 
-`$(':text[name="firstName"]').after('*');`
+```javascript
+$(':text[name="firstName"]').after('*');
+```
 
-**addClass() / removeClass():** Adds / remove a single class, multiple classes, or all classes from each element in the set of matched elements.
-
-Examples: 
-
-    $('.font-xs').addClass('color-green');
-    $('label').removeClass('color-blue');
-
-**attr():** Get the value of an attribute for the first element in the set of matched elements or set one or more attributes for every matched element.
+**.attr():** Get the value of an attribute for the first element in the set of matched elements or set one or more attributes for every matched element.
 
 Example: 
 
-    var lastNamePlaceholder = $(':text[name="lastName"]').attr('placeholder');
-    console.log(lastNamePlaceholder);
-    
-    $(':text[name="firstName"]').attr('placeholder', 'Please, your first name');
+```javascript
+var lastNamePlaceholder = $(':text[name="lastName"]').attr('placeholder');
+console.log(lastNamePlaceholder);
 
-**append():** Inserts new HTML into the end of the selected HTML element. The new HTML is concatenated with the HTML the element had already.
+$(':text[name="firstName"]').attr('placeholder', 'Please, your first name');
+```
+
+**.append():** Inserts new HTML into the end of the selected HTML element. The new HTML is concatenated with the HTML the element had already.
 
 Example:
 
-    $('fieldset').append('<p>Pellentesque euismod nunc non convallis mattis.</p>');
+```javascript
+$('fieldset').append('<p>Pellentesque euismod nunc non convallis mattis.</p>');
+```
 
-**before():** Inserts HTML before the selected element (outside the element).
+**.before():** Inserts HTML before the selected element (outside the element).
 
 Example: 
-`$(':text').before(': ');`
+```javascript
+$(':text').before(': ');
+```
 
-**detach():** Is the same as `.remove()`, except that `.detach()` keeps all jQuery data associated with the removed elements. This method is useful when removed elements are to be reinserted into the DOM at a later time.
+**.detach():** Is the same as `.remove()`, except that `.detach()` keeps all jQuery data associated with the removed elements. This method is useful when removed elements are to be reinserted into the DOM at a later time.
 
 Example:
 
-    // selector caching
-    var $firstNameField = $(':input[name="firstName"]').parent();
-    
-    // remove from DOM
-    $firstNameField.detach();
-    
-    // remove color blue class and add new class
-    $firstNameField.removeClass('color-blue').addClass('color-red');
-    
-    // re-insert into DOM
-    $(':text[name="lastName"]').parent().after($firstNameField);
+```javascript
+// selector caching
+var $firstNameField = $(':input[name="firstName"]').parent();
 
-**empty():** Removes all child elements of the selected HTML element.
+// remove from DOM
+$firstNameField.detach();
+
+// remove color blue class and add new class
+$firstNameField.removeClass('color-blue').addClass('color-red');
+
+// re-insert into DOM
+$(':text[name="lastName"]').parent().after($firstNameField);
+```
+
+**.empty():** Removes all child elements of the selected HTML element.
 
 Example: 
-`$('label.font-xs').empty();`
+```javascript
+$('label.font-xs').empty();
+```
 
-**prop():** Get the value of a property for the first element in the set of matched elements or set one or more properties for every matched element. It should be used when properties contain only two possible values true or false, such as "checked", "selected", "disabled", etc.
+**.prop():** Get the value of a property for the first element in the set of matched elements or set one or more properties for every matched element. It should be used when properties contain only two possible values true or false, such as "checked", "selected", "disabled", etc.
 
 Example:
 
-    // selectors caching
-    var $musicField = $(':checkbox[value="music"]');
-    var $lastNameField = $(':text[name="lastName"]');
-    
-    // return checked property
-    console.log($musicField.prop('checked'));
-    
-    // disable last name field
-    $lastNameField.prop('disabled', true);
+```javascript
+// selectors caching
+var $musicField = $(':checkbox[value="music"]');
+var $lastNameField = $(':text[name="lastName"]');
 
-**remove():** Remove the set of matched elements from the DOM. Use `.remove()` when you want to remove the element itself, as well as everything inside it.
+// return checked property
+console.log($musicField.prop('checked'));
 
-Example: 
-`$('label.font-xs').remove();`
+// disable last name field
+$lastNameField.prop('disabled', true);
+```
 
-**removeAttr():** Remove an attribute from each element in the set of matched elements.
+**.remove():** Remove the set of matched elements from the DOM. Use `.remove()` when you want to remove the element itself, as well as everything inside it.
 
 Example: 
-`$(':text[name="firstName"]').removeAttr('placeholder');`
+```javascript
+$('label.font-xs').remove();
+```
 
-**wrap():** The `wrap()` method can wrap the selected HTML element in another HTML element.
+**.removeAttr():** Remove an attribute from each element in the set of matched elements.
 
 Example: 
-`$('label.font-xs').wrap('<div>');` 
+```javascript
+$(':text[name="firstName"]').removeAttr('placeholder');
+```
+
+**.wrap():** The `wrap()` method can wrap the selected HTML element in another HTML element.
+
+Example: 
+```javascript
+$('label.font-xs').wrap('<div>');
+```
 
 *Reference:* [jQuery Manipulation](http://api.jquery.com/category/manipulation/)
 
@@ -797,106 +851,536 @@ We could define six major groups related to:
 
 ###Browser events
 
-**error():** The `error()` event is sent to elements, such as images, that are referenced by a document and loaded by the browser. It is called if the element was not loaded correctly.
+**.error():** The `error()` event is sent to elements, such as images, that are referenced by a document and loaded by the browser. It is called if the element was not loaded correctly.
 
 Example HTML:
 
-    <!doctype html>
-    <html lang="en">
-    <head>
-      <meta charset="utf-8">
-      <title>find demo</title>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-      <style>
-    	  img {
-    		width: 85px;
-    		height: 85px;
-    		border: 1px solid #E1E1E1;
-    		padding: 5px;
-    	}
-      </style>
-    </head>
-    <body>
-    
-    <img alt="Some image" src="fhfkh.gif">
-    <img alt="Some image" src="https://www.google.com.ar/images/srpr/logo11w.png">
-    <img alt="Some image" src="fhfkh.gif">
-    
-    </body>
-    </html>
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>find demo</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <style>
+	  img {
+		width: 85px;
+		height: 85px;
+		border: 1px solid #E1E1E1;
+		padding: 5px;
+	}
+  </style>
+</head>
+<body>
+
+<img alt="First image" src="fhfkh.gif">
+<img alt="Second image" src="https://www.google.com.ar/images/srpr/logo11w.png">
+<img alt="Third image" src="fhfkh.gif">
+<p>
+	<input id="btnAction" type="button" value="Some action">
+</p>
+
+</body>
+</html>
+```
 
 Usage:
 
-    $('img').error(function () {
-      $(this).attr('src', 'https://browshot.com/static/images/not-found.png');
-    });
+```javascript
+$('img').error(function () {
+  $(this).attr('src', 'https://browshot.com/static/images/not-found.png');
+});
+```
 
-**resize():** The `resize` event is sent to the window element when the size of the browser window changes.
+**.resize():** The `resize` event is sent to the window element when the size of the browser window changes.
 
 Example: 
 
-    $(window).resize(function () {
-    	console.log('window size changed!');
-    });
+```javascript
+$(window).resize(function () {
+	console.log('window size changed!');
+});
+```
 
-**scroll():** The scroll event is sent to an element when the user scrolls to a different place in the element.
+**.scroll():** The scroll event is sent to an element when the user scrolls to a different place in the element.
 
 ###Document events
 
-**load():** The `load` event is sent to an element when it and all sub-elements have been completely loaded. This event can be sent to any element associated with a URL: images, scripts, frames, iframes, and the window object. **Deprecated: use .on('load', handler)**
+**.load():** The `load` event is sent to an element when it and all sub-elements have been completely loaded. This event can be sent to any element associated with a URL: images, scripts, frames, iframes, and the window object. **Deprecated: use .on('load', handler)**
 
-**ready():** The document ready event signals that the DOM of the page is now ready, so you can manipulate it without worrying that parts of the DOM has not yet been created. The document ready event fires before all images etc. are loaded, but after the whole DOM itself is ready.
+**.ready():** The document ready event signals that the DOM of the page is now ready, so you can manipulate it without worrying that parts of the DOM has not yet been created. The document ready event fires before all images etc. are loaded, but after the whole DOM itself is ready.
 
 Usage:
 
-    $(document).ready(function () {
-    	console.log('DOM is fully loaded');
-    });
+``` javascript
+$(document).ready(function () {
+	console.log('DOM is fully loaded');
+});
+```
 
-**unload():** The `unload` event is sent to the window element when the user navigates away from the page. **Deprecated: use .on('unload', handler)**
+**.unload():** The `unload` event is sent to the window element when the user navigates away from the page. **Deprecated: use .on('unload', handler)**
 
 ###Handler Attachment
 
- - on()
- - off()
- - one()
- - trigger()
- - jQuery.proxy()
+**on():** jQuery provides this method to respond to any event on the selected elements. This is called an event binding.
+
+The standard events in the Document Object Model are: blur, focus, load, resize, scroll, unload, beforeunload, click, dblclick, mousedown, mouseup, mousemove, mouseover, mouseout, mouseenter, mouseleave, change, select, submit, keydown, keypress, and keyup.
+
+Example:
+```javascript
+$('img').on('click', function () {
+	console.log($(this).attr('alt'));
+});
+```
+
+We can attach multiple event handlers simultaneously using a plain object.
+
+Example:
+```javascript
+$('img').on({
+	click: function () {
+		console.log($(this).attr('alt'));
+	},
+	dblclick: function () {
+		console.log($(this).attr('src'));
+	}
+});
+```
+
+**.off():** The `.off()` method removes event handlers that were attached with `.on()`.
+
+Example:
+```javascript
+// attach events
+$('img').on({
+	click: function () {
+		console.log($(this).attr('alt'));
+	},
+	dblclick: function () {
+		console.log($(this).attr('src'));
+	}
+});
+
+// caching selector
+var $btn = $('#btnAction');
+
+// change value and attach event to the button
+$btn.val('Remove dblclick event!').on('click', function () {
+	$('img').off('dblclick');
+});
+```
+
+**.one():** This method is identical to `.on()`, except that the handler is unbound after its first invocation.
+
+Example:
+```javascript
+$('img').one('click', function () {
+	console.log($(this).attr('alt'));
+});
+```
+
+**.trigger():** jQuery provides a way to trigger the event handlers bound to an element without any user interaction via the `.trigger()` method.
+
+Example:
+```javascript
+// attach event
+$('img').on('click', function () {
+	console.log($(this).attr('alt'));
+});
+
+// change value and attach event to the button
+$('#btnAction').val('Trigger click event on first image').on('click', function () {
+	$('img').first().trigger('click');
+});
+```
+
+**Note:** The `.trigger()` function cannot be used to mimic native browser events, such as clicking on a file input box or an anchor tag.
+
+**$.proxy():** This method is most useful for attaching event handlers to an element where the context is pointing back to a different object.
+
+Example:
+```javascript
+var desktop = {
+  breakpoints: [640, 768, 960]
+};
+
+var mobile = {
+  breakpoints: [320, 480]
+};
+
+var Utils = {
+  getBreakpoints: function () {
+    for(var bp in this.breakpoints){
+      console.log(this.breakpoints[bp]);
+    }
+  }
+};
+
+$('#btnAction').on('click', $.proxy(Utils.getBreakpoints, desktop));
+```
 
 ###Form events
 
- - blur()
- - change()
- - focus()
- - select()
- - submit()
+ - **.blur():** is sent to an element when it loses focus.
+ - **.change():** is sent to an element when its value changes.
+ - **.focus():** is sent to an element when it gains focus.
+ - **.select():** is sent to an element when the user makes a text selection inside it.
+ - **.submit():** is sent to an element when the user is attempting to submit a form.
 
 ###Keyboad events
 
- - keydown()
- - keypress()
- - keyup()
+ - **.keydown():** is sent to an element when the user first presses a key on the keyboard.
+ - **.keypress():** is sent to an element when the browser registers keyboard input. This is similar to the keydown event, except that modifier and non-printing keys such as Shift, Esc, and delete trigger keydown events but not keypress events.
+ - **.keyup():** is sent to an element when the user releases a key on the keyboard.
 
 ###Mouse events
 
- - click()
- - hover()
- - dbclick()
- - mouserover()
-
-events / on / off / one / proxy / trigger
+ - **.click():** is sent to an element when the mouse pointer is over the element, and the mouse button is pressed and released.
+ - **.hover():** The `.hover()` method binds handlers for both mouseenter and mouseleave events.
+ - **.dbclick():** is sent to an element when the element is double-clicked.
+ - **.mouserover():** is sent to an element when the mouse pointer enters the element.
 
 ---
+##CSS Manipulation
 
-modifiers css / attr / prop / data / toggle
+With the JQuery CSS features you can manipulate the HTML element's CSS attributes and classes without worrying about browsers and their versions as long as the browsers have JavaScript enabled, and you can select HTML elements in the document based on their CSS class. 
 
+These methods get and set CSS-related properties of elements:
+
+**.removeClass():** Remove a single class, multiple classes, or all classes from each element in the set of matched elements.
+
+Example:
+``` html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>find demo</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <style>
+	img {
+		  border: 1px solid #E1E1E1;
+		  padding: 5px;
+	}
+	
+	.smallWidth {
+	  width: 250px;
+	}
+	
+	.mediumWidth {
+	  width: 400px;
+	}
+	
+	.strongBorderRed {
+	  border: 3px solid red;
+	}
+	.thinBorderBlue {
+	  border: 1px solid blue;
+	}
+  </style>
+</head>
+<body>
+
+<img alt="First image" class="mediumWidth" src="https://webtoolfeed.files.wordpress.com/2012/04/curve_0-preview1.jpg">
+<img alt="Second image" class="mediumWidth" src="http://webtoolfeed.files.wordpress.com/2012/04/thief_2-preview1.jpg">
+<img alt="Third image" class="mediumWidth" src="http://webtoolfeed.files.wordpress.com/2012/04/colgate_0-preview1.jpg">
+<p>
+	<input id="btnAction" type="button" value="Some action">
+</p>
+
+</body>
+</html>
+```
+
+Usage:
+``` javascript
+var $btn = $('#btnAction');
+$btn.on('click', function() {
+  $('img').removeClass('mediumWidth');
+});
+```
+
+**.addClass():** Adds the specified class(es) to each element in the set of matched elements. It simply adds the class, appending it to any which may already be assigned to the elements.
+
+Example:
+``` javascript
+var $btn = $('#btnAction');
+$btn.on('click', function() {
+  $('img').removeClass('mediumWidth').addClass('smallWidth');
+});
+```
+
+**.toggleClass():** Add or remove one or more classes from each element in the set of matched elements, depending on either the class's presence or the value of the state argument.
+
+Example: 
+```javascript
+var $btn = $('#btnAction');
+$btn.on('click', function() {
+  $('img').toggleClass('strongBorderRed');
+});
+```
+
+**.css():** jQuery can also change multiple CSS properties in a single call, by putting them all into a JavaScript object.
+
+Example:
+
+```javascript
+var $btn = $('#btnAction');
+$btn.on('click', function() {
+  $('img').css({
+	  'border': '2px solid black',
+	  'background-color': 'black',
+	  'padding': '10px'
+  });
+});
+```
 ---
 
-ajax / post / get / shortcuts
+##Ajax
+The jQuery AJAX features makes it possible and easy use AJAX in your HTML pages. The term AJAX is short for Asynchronous Javascript And XML. AJAX makes it possible to fetch content from a server in the background (asynchronously), and update parts of your page with the new content - all without having to reload the complete HTML page.
+
+**$.ajax():** The `$.ajax()` function returns an object. On this object the example calls three methods: `done()`, `fail()` and `always()`.
+
+Ajax requests are triggered by JavaScript code; your code sends a request to a URL, and when it receives a response, a callback function can be triggered to handle the response. Because the request is asynchronous, the rest of your code continues to execute while the request is being processed, so it's imperative that a callback be used to handle the response.
+
+In general, Ajax does not work across domains. For instance, a webpage loaded from orbitz.com is unable to make an Ajax request to ebookers.com.
+
+Example:
+
+```javascript
+var $btn = $('#btnAction');
+$btn.on('click', function() {
+  $.ajax({
+    // The URL for the request
+    url: 'https://api.myjson.com/bins/2aej4',
+    // The data to send
+    data: {
+      city: 'chicago',
+      per_page: 4
+    },
+    // Whether this is a POST or GET request
+    type: 'GET',
+    // The type of data we expect back
+    dataType: 'json'
+  })
+    .done(function (response) {
+      for(var i in response.results) {
+        console.log(response.results[i]);
+      }
+    })
+    .fail(function (jqXhr, status) {
+      console.log('Request fail!: ' + status);
+    })
+    .always(function () {
+      console.log('Request complete!');
+    });
+});
+```
+jQuery has two functions that can be used to send simplified HTTP GET and HTTP POST requests. These functions are the `$.get()` and `$.post()` functions.
+
+**$.get():** Load data from the server using a HTTP GET request.
+
+Example:
+```javascript
+var $btn = $('#btnAction');
+$btn.on('click', function() {
+  $.get('https://api.myjson.com/bins/2aej4', {
+      city: 'chicago',
+      per_page: 4
+    })
+    .done(function (response) {
+      for(var i in response.results) {
+        console.log(response.results[i]);
+      }
+    })
+    .fail(function (jqXhr, status) {
+      console.log('Request fail!: ' + status);
+    })
+    .always(function () {
+      console.log('Request complete!');
+    });
+});
+```
+
+**$.post():** Load data from the server using a HTTP POST request.
+
+Example:
+
+```javascript
+var $btn = $('#btnAction');
+$btn.on('click', function() {
+  $.post('https://api.myjson.com/bins/2aej4', {
+      city: 'chicago',
+      per_page: 4
+    })
+    .done(function (response) {
+      for(var i in response.results) {
+        console.log(response.results[i]);
+      }
+    })
+    .fail(function (jqXhr, status) {
+      console.log('Request fail!: ' + status);
+    })
+    .always(function () {
+      console.log('Request complete!');
+    });
+});
+```
 
 ---
+##Utils
 
-utils parse / extend / each / 
+**$.data():** Return the value at the named data store for the first element in the jQuery collection, as set by data(name, value) or by an HTML5 data-* attribute.
+
+Example: 
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>find demo</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <style>
+	img {
+		  border: 1px solid #E1E1E1;
+		  padding: 5px;
+	}
+	
+	.smallWidth {
+	  width: 250px;
+	}
+	
+	.mediumWidth {
+	  width: 400px;
+	}
+	
+	.strongBorderRed {
+	  border: 3px solid red;
+	}
+	.thinBorderBlue {
+	  border: 1px solid blue;
+	}
+  </style>
+</head>
+<body>
+
+<img alt="First image" class="mediumWidth" src="https://webtoolfeed.files.wordpress.com/2012/04/curve_0-preview1.jpg" data-position="1" data-rel="First">
+<img alt="Second image" class="mediumWidth" src="http://webtoolfeed.files.wordpress.com/2012/04/thief_2-preview1.jpg" data-position="5" data-rel="Second">
+<img alt="Third image" class="mediumWidth" src="http://webtoolfeed.files.wordpress.com/2012/04/colgate_0-preview1.jpg" data-position="3" data-rel="Third">
+<p>
+	<input id="btnAction" type="button" value="Some action">
+</p>
+
+</body>
+</html>
+```
+
+Usage:
+```javascript
+$('img').on('click', function() {
+  var data = $(this).data();
+  console.log(data);
+});
+```
+
+**$.each():** A generic iterator function, which can be used to seamlessly iterate over both objects and arrays. 
+
+Example:
+```javascript
+var breakpoints = [640, 768, 960];
+$.each(breakpoints, function (index, value) {
+	console.log(index + ': ' + value);
+});
+
+var pos = {
+	device: 'tablet',
+	breakpoints: [640, 768, 960],
+	brand: 'Orbitz'
+};
+$.each(pos, function (index, value) {
+	console.log(index + ': ' + value);
+});
+```
+
+**$.extend():** Merge the contents of two or more objects together into the first object.
+Undefined properties are not copied. However, properties inherited from the object's prototype will be copied over. 
+
+Examples:
+```javascript
+var obj1 = {
+	name: "Hilton",
+	place: "New York"
+};
+var obj2 = {
+	name: "Ancasti",
+	place: "Catamarca"
+};
+$.extend(obj1, obj2);
+console.log(obj1);
+```
+
+```javascript
+var obj1 = {
+	name: "Hilton",
+	place: "New York"
+};
+var obj2 = {
+	name: "Ancasti",
+	place: undefined
+};
+$.extend(obj1, obj2);
+console.log(obj1);
+```
+
+```javascript
+var obj1 = {
+	name: "Hilton",
+	place: "New York"
+};
+var obj2 = {
+	name: "Ancasti",
+	place: undefined
+};
+var obj3 = $.extend({}, obj1, obj2);
+console.log(obj1);
+console.log(obj3);
+```
+
+**$.isEmptyObject():** Check to see if an object is empty (contains no enumerable properties).
+
+**$.map():** The `$.map()` method applies a function to each item in an array or object and maps the results into a new array. 
+
+Example:
+```javascript
+var prices = [10, 12, 23];
+prices = $.map(prices, function (value, index) {
+	return (value + 5);
+});
+console.log(prices);
+```
+
+**$.parseHTML():** Parses a string into an array of DOM nodes.
+
+**$.parseJSON():** Takes a well-formed JSON string and returns the resulting JavaScript value.
+
+Example:
+```javascript
+var text = '{ "name": "Holiday Inn" }';
+var obj = jQuery.parseJSON(text);
+console.log(obj.name);
+```
+
+**$.parseXML():** Parses a string into an XML document.
+
+Example:
+```javascript
+var xml = '<results><hotel><name>Continental</name><address>La Posta 30</address></hotel></results>';
+
+var newXml = $.parseXML(xml);
+var address = $(newXml).find('address');
+console.log(address.text());
+```
+
 
 ----------
 **References:**
