@@ -1,6 +1,36 @@
 
 # Lesson 2: OOP, Design patterns & Intro to jQuery
 
+##Table of contents
+
+ 1. [Intro to OOP on JS](#introduction-to-oop-on-js)
+	 1. [Custom objects](#custom-objects)
+	 2. [The constructor](#the-constructor)
+	 3. [The properties](#the-properties)
+	 4. [Methods](#methods)
+	 5. [Inheritance & encapsulation](#inheritance-encapsulation)
+	 6. [Polymorphism](#polymorphism)
+ 2. [Design Patterns](#desing-patterns)
+	 1. [The costructor pattern](#the-constructor-pattern)
+	 2. [The module pattern](#the-module-pattern)
+	 3. [The singleton pattern](#the-singleton-pattern)
+	 4. [The observer pattern](#the-observer-pattern)
+	 5. [Revelation pattern](#revelation-pattern)
+	 6. [Facade pattern](#facade-pattern)
+	 7. [The prototype pattern](#the-prototype-pattern)
+ 3. [Introduction to jQuery](#introduction-to-jquery)
+	 1. [Selectors](#selectors)
+	 2. [Others selection methods](#others-selection-methods)
+	 3. [Shortcuts selectors](#shortcut-selectors)
+	 4. [Accessing to DOM](#accessing-to-dom)
+	 5. [Events](#events)
+	 6. [CSS Manipulation](#css-manipulation)
+	 7. [Ajax](#ajax)
+	 8. [Utils](#utils)
+
+
+----------
+
 ## Introduction to OOP on JS
 
 ## Standard built-in objects
@@ -179,7 +209,7 @@ Behind the scenes, the library simply opts for the most optimal approach to sele
 
 We're probably all also familiar with jQuery's `$("selector")`. This is significantly more easy to use for selecting HTML elements on a page versus having to manually opt for `getElementById()`, `getElementsByClassName()`, `getElementByTagName` and so on.
 
-### Creational Design Patterns ###
+### Creational Design Patterns
 This patterns focus on handling object creation mechanisms where objects are created in a manner suitable for the situation we're working in. 
 
  - Factory
@@ -187,7 +217,7 @@ This patterns focus on handling object creation mechanisms where objects are cre
  - Prototype
  - Singleton
 
-### Structural Design Patterns ###
+### Structural Design Patterns
 This patterns are concerned with object composition and typically identify simple ways to realize relationships between different objects.
 
  - Adapter
@@ -195,7 +225,7 @@ This patterns are concerned with object composition and typically identify simpl
  - Facade
  - Proxy
 
-### Behavioral Design Patterns ###
+### Behavioral Design Patterns
 This patterns focus on improving or streamlining the communication between disparate objects in a system.
 
  - Iterator
@@ -205,9 +235,9 @@ This patterns focus on improving or streamlining the communication between dispa
 
 ----------
 
-## JavaScript Design Patterns ##
+## JavaScript Design Patterns
 
-### The Constructor Pattern ###
+### The Constructor Pattern
 
 **Object creation**
 The three common ways to create new objects in JavaScript are as follows:
@@ -261,7 +291,7 @@ var driver = new Person("Cosme", "Fulanito");
 console.log(driver.getFullName());
 ```
 
-### The module pattern ###
+### The module pattern
 Modules are an integral piece of any robust application's architecture and typically help in keeping the units of code for a project both cleanly separated and organized.
 
 **Object literals**
@@ -374,7 +404,7 @@ console.log(Person.getFullName());
 console.log(Person.getFormalName());
 ```
 
-###The Singleton Pattern###
+###The Singleton Pattern
 
 The Singleton pattern is thus known because it restricts instantiation of a class to a single object. 
 
@@ -414,7 +444,7 @@ console.log(p1.getFullName());
 console.log(p1 === p2);
 ```
 
-###The Observer Pattern###
+###The Observer Pattern
 
 Is a publish/subscribe pattern which allows a number of observer objects to see an event,  automatically notifying them of any changes to state.
 
