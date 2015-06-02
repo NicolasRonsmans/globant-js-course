@@ -3,14 +3,15 @@
 ## Table of Contents
 
   1. [Types](#types)
+  1. [Variables](#variables)
   1. [Objects](#objects)
   1. [Arrays](#arrays)
   1. [Strings](#strings)
   1. [Functions](#functions)
-  1. [Properties](#properties)
-  1. [Variables](#variables)
+  1. [Properties](#properties) 
   1. [Conditional Expressions & Equality](#conditional-expressions--equality)
   1. [Events](#events)
+  1. [Hoisting](#hoisting)
   1. [Debug](#debug)
 
 #### Types
@@ -44,6 +45,124 @@
     bar[0] = 9;
 
     console.log(foo[0], bar[0]); // => 9, 9
+    ```
+
+**[⬆ back to top](#topics)**
+
+#### Variables
+
+  - Always use `var` to declare variables. Not doing so will result in global variables. We want to avoid polluting the global namespace. Captain Planet warned us of that.
+
+    ```javascript
+    // bad
+    superPower = new SuperPower();
+
+    // good
+    var superPower = new SuperPower();
+    ```
+
+  - Use one `var` declaration per variable.
+    It's easier to add new variable declarations this way, and you never have
+    to worry about swapping out a `;` for a `,` or introducing punctuation-only
+    diffs.
+
+    ```javascript
+    // bad
+    var items = getItems(),
+        goSportsTeam = true,
+        dragonball = 'z';
+
+    // bad
+    // (compare to above, and try to spot the mistake)
+    var items = getItems(),
+        goSportsTeam = true;
+        dragonball = 'z';
+
+    // good
+    var items = getItems();
+    var goSportsTeam = true;
+    var dragonball = 'z';
+    ```
+
+  - Declare unassigned variables last. This is helpful when later on you might need to assign a variable depending on one of the previous assigned variables.
+
+    ```javascript
+    // bad
+    var i, len, dragonball,
+        items = getItems(),
+        goSportsTeam = true;
+
+    // bad
+    var i;
+    var items = getItems();
+    var dragonball;
+    var goSportsTeam = true;
+    var len;
+
+    // good
+    var items = getItems();
+    var goSportsTeam = true;
+    var dragonball;
+    var length;
+    var i;
+    ```
+
+  - Assign variables at the top of their scope. This helps avoid issues with variable declaration and assignment hoisting related issues.
+
+    ```javascript
+    // bad
+    function() {
+      test();
+      console.log('doing stuff..');
+
+      //..other stuff..
+
+      var name = getName();
+
+      if (name === 'test') {
+        return false;
+      }
+
+      return name;
+    }
+
+    // good
+    function() {
+      var name = getName();
+
+      test();
+      console.log('doing stuff..');
+
+      //..other stuff..
+
+      if (name === 'test') {
+        return false;
+      }
+
+      return name;
+    }
+
+    // bad
+    function() {
+      var name = getName();
+
+      if (!arguments.length) {
+        return false;
+      }
+
+      return true;
+    }
+
+    // good
+    function() {
+      if (!arguments.length) {
+        return false;
+      }
+
+      var name = getName();
+
+      return true;
+    }
     ```
 
 **[⬆ back to top](#topics)**
@@ -327,136 +446,18 @@
 **[⬆ back to top](#topics)**
 
 
-#### Variables
-
-  - Always use `var` to declare variables. Not doing so will result in global variables. We want to avoid polluting the global namespace. Captain Planet warned us of that.
-
-    ```javascript
-    // bad
-    superPower = new SuperPower();
-
-    // good
-    var superPower = new SuperPower();
-    ```
-
-  - Use one `var` declaration per variable.
-    It's easier to add new variable declarations this way, and you never have
-    to worry about swapping out a `;` for a `,` or introducing punctuation-only
-    diffs.
-
-    ```javascript
-    // bad
-    var items = getItems(),
-        goSportsTeam = true,
-        dragonball = 'z';
-
-    // bad
-    // (compare to above, and try to spot the mistake)
-    var items = getItems(),
-        goSportsTeam = true;
-        dragonball = 'z';
-
-    // good
-    var items = getItems();
-    var goSportsTeam = true;
-    var dragonball = 'z';
-    ```
-
-  - Declare unassigned variables last. This is helpful when later on you might need to assign a variable depending on one of the previous assigned variables.
-
-    ```javascript
-    // bad
-    var i, len, dragonball,
-        items = getItems(),
-        goSportsTeam = true;
-
-    // bad
-    var i;
-    var items = getItems();
-    var dragonball;
-    var goSportsTeam = true;
-    var len;
-
-    // good
-    var items = getItems();
-    var goSportsTeam = true;
-    var dragonball;
-    var length;
-    var i;
-    ```
-
-  - Assign variables at the top of their scope. This helps avoid issues with variable declaration and assignment hoisting related issues.
-
-    ```javascript
-    // bad
-    function() {
-      test();
-      console.log('doing stuff..');
-
-      //..other stuff..
-
-      var name = getName();
-
-      if (name === 'test') {
-        return false;
-      }
-
-      return name;
-    }
-
-    // good
-    function() {
-      var name = getName();
-
-      test();
-      console.log('doing stuff..');
-
-      //..other stuff..
-
-      if (name === 'test') {
-        return false;
-      }
-
-      return name;
-    }
-
-    // bad
-    function() {
-      var name = getName();
-
-      if (!arguments.length) {
-        return false;
-      }
-
-      return true;
-    }
-
-    // good
-    function() {
-      if (!arguments.length) {
-        return false;
-      }
-
-      var name = getName();
-
-      return true;
-    }
-    ```
-
-**[⬆ back to top](#topics)**
-
-
 #### Conditional Expressions & Equality
-
-  - Use `===` and `!==` over `==` and `!=`.
+  
   - Conditional expressions are evaluated using coercion with the `ToBoolean` method and always follow these simple rules:
 
-    + **Objects** evaluate to **true**
-    + **Undefined** evaluates to **false**
-    + **Null** evaluates to **false**
-    + **Booleans** evaluate to **the value of the boolean**
-    + **Numbers** evaluate to **false** if **+0, -0, or NaN**, otherwise **true**
-    + **Strings** evaluate to **false** if an empty string `''`, otherwise **true**
+    | Argument Type | Result |
+	|-------------- |--------|
+	|Undefined      |false |
+	|Null	        |false |
+	|Boolean	    |The result equals the input argument (no conversion)  |
+	|Number	        |The result is false if the argument is +0, −0, or NaN otherwise the result is true
+	|String	        |The result is false if the argument is the empty String (its length is zero) otherwise the result is true |
+	|Object	        |true |
 
     ```javascript
     if ([0]) {
@@ -464,12 +465,69 @@
       // An array is an object, objects evaluate to true
     }
     ```
+  - Equals operator (==)	
+	
+	|Type(x)         |Type(y)         |Result               |
+	|----------------|----------------|---------------------|
+	|null            |Undefined       |true                 |
+	|Undefined       |null            |true                 |
+	|Number          |String          |x == toNumber(y)     |
+	|String          |Number          |toNumber(x) == y     |
+	|Boolean         |(any)           |toNumber(x) == y     |
+	|(any)           |Boolean         |x == toNumber(y)     |
+	|String or Number|Object          |x == toPrimitive(y)  |
+	|Object          |String or Number|toPrimitive(x) == y  |
+	|otherwise…	     |                |false                |
 
+	Where the result is an expression the algorithm is reapplied until the result is a boolean. 
+	toNumber and toPrimitive are internal methods which convert their arguments.
+	
+	```javascript
+	var x = 1;
+	
+	x == 8;     //false
+	x == true;  //true
+	x == 1;     //true
+	```
+	
+	```javascript
+	//EQUALITY CHECK...
+	"potato" == false; 
+	 
+	//HOW IT WORKS...
+	//convert boolean using toNumber
+	"potato" == 0;
+	//convert string using toNumber
+	NaN == 0; //false
+	```
+	
+  - Strict equals operator (===)
+   
+	|Type(x)                       |Values                             |Result|
+	|------------------------------|-----------------------------------|------|
+	|Type(x) different from Type(y)|                                   |false |
+	|Undefined or Null             |                                   |true  |
+	|Number                        |x same value as y (but not NaN)    |true  |
+	|String                        |x and y are identical characters   |true  |
+	|Boolean                       |x and y are both true or both false|true  |
+	|Object                        |x and y reference same object	   |true  |
+	|otherwise…                    |                                   |false |
+
+	If the operands are of different types the answer is always false. If they are of the same type: object identifiers must reference the same object, strings must contain  identical character sets, other primitives must share the same value. NaN, null and 	 undefined will never === another type. NaN does not even === itself.		
+	
+	```javascript
+	var x = 1;
+	
+	x === "1";  //false
+	x === true; //false
+	x === 1;    //true
+	```
+    
   - Use shortcuts.
 
     ```javascript
     // bad
-    if (name !== '') {
+    if (name != '') {
       // ...stuff...
     }
 
@@ -495,97 +553,101 @@
 
 #### Events
 
-  - When attaching data payloads to events (whether DOM events or something more proprietary like Backbone events), pass a hash instead of a raw value. This allows a subsequent contributor to add more data to the event payload without finding and updating every handler for the event. For example, instead of:
+  - HTML allows event handlers (in JS) to be added to HTML elements. In the following example, an onclick attribute (with code), is added to a button element:
 
-    ```js
-    // bad
-    $(this).trigger('listingUpdated', listing.id);
+    ```html
+    <div id="demo"></div>
+	<button onclick='getElementById("demo").innerHTML=Date()'>The time is?</button>
+	```
+- In the next example, the code changes the content of it's own element (using this.innerHTML):
+   
+	```html
+    <button onclick="this.innerHTML=Date()">The time is?</button>
+	```
+	
+- It is more common to see event attributes calling functions:
 
-    ...
-
-    $(this).on('listingUpdated', function(e, listingId) {
-      // do something with listingId
-    });
+ 	```html
+	<button onclick="displayDate()">The time is?</button>
+	<script>
+	function displayDate() {
+		document.getElementById("demo").innerHTML = Date();
+	}
+	</script>
     ```
 
-    prefer:
+ **[⬆ back to top](#topics)**
 
-    ```js
-    // good
-    $(this).trigger('listingUpdated', { listingId : listing.id });
+#### Hoisting
 
-    ...
+- Hoisting is JavaScript's default behavior of moving all declarations to the top of the current scope (to the top of the current script or the current function). 
+A variable can be used before it has been declared.
 
-    $(this).on('listingUpdated', function(e, data) {
-      // do something with data.listingId
-    });
-    ```
+	```js
+    x = 5; // Assign 5 to x
 
-  **[⬆ back to top](#topics)**
+	element = document.getElementById("demo"); // Find an element 
+	element.innerHTML = x;                     // Display x in the element
 
-
-#### Modules
-
-  - The module should start with a `!`. This ensures that if a malformed module forgets to include a final semicolon there aren't errors in production when the scripts get concatenated. [Explanation](https://github.com/airbnb/javascript/issues/44#issuecomment-13063933)
-  - The file should be named with camelCase, live in a folder with the same name, and match the name of the single export.
-  - Add a method called `noConflict()` that sets the exported module to the previous version and returns this one.
-  - Always declare `'use strict';` at the top of the module.
-
-    ```javascript
-    // fancyInput/fancyInput.js
-
-    !function(global) {
-      'use strict';
-
-      var previousFancyInput = global.FancyInput;
-
-      function FancyInput(options) {
-        this.options = options || {};
-      }
-
-      FancyInput.noConflict = function noConflict() {
-        global.FancyInput = previousFancyInput;
-        return FancyInput;
-      };
-
-      global.FancyInput = FancyInput;
-    }(this);
+	var x; // Declare x
     ```
 
 **[⬆ back to top](#topics)**
 
-#### Debug
+#### Debugging
 
-##### Chrome
-* Open the browser
-* From the menu, select tools
-* From tools, choose developer tools
-* Finally, select Console
+- The debugger keyword
 
-##### Firefox Firebug
-* Open the browser
-* Go to the web page: http://www.getfirebug.com
-* Follow the instructions how to install Firebug
+	```javascript
+    var a = 2;
+	var b = 4;	
+	var c = a + b;	
+	debugger;	
+	c = c + 1;
+    ```
+	
+- The console.log method
 
-##### Internet Explorer
-* Open the browser
-* From the menu, select tools
-* From tools, choose developer tools
-* Finally, select Console
+	```javascript
+    var a = 2;
+	var b = 4;
+	var c = a + b;	
+	console.log(c);
+    ```
+    
+- Setting breakpoints
 
-##### Opera
-* Open the browser.
-* Go to the webpage: http://www.opera.com/dragonfly/documentation/debugger
-* Learn how Opera Draginfly works
+- Browsers' Debugging Tools
+	###### Chrome
+    * Open the browser
+    * From the menu, select tools
+    * From tools, choose developer tools
+    * Finally, select Console
 
-##### Safari Firebug
-* Open the browser
-* Go to the webpage: http://extensions.apple.com
-* Follow the instructions how to install Firebug Lite
+    ###### Firefox Firebug
+    * Open the browser
+    * Go to the [web page](#http://www.getfirebug.com)
+    * Follow the instructions how to install Firebug
 
-##### Safari Develop Menu
-* Go to Safari, Preferences, Advanced in the main menu
-* Check "Enable Show Develop menu in menu bar"
-* When the new option "Develop" appears in the menu, choose "Show Error Console"
+    ###### Internet Explorer
+    * Open the browser
+    * From the menu, select tools
+    * From tools, choose developer tools
+    * Finally, select Console
+
+    ###### Opera
+    * Open the browser.
+    * Go to the [web page](#http://www.opera.com/dragonfly/documentation/debugger)
+    * Learn how Opera Draginfly works
+
+    ###### Safari Firebug
+    * Open the browser
+    * Go to the [web page](#http://extensions.apple.com)
+    * Follow the instructions how to install Firebug Lite
+
+    ###### Safari Develop Menu
+    * Go to Safari, Preferences, Advanced in the main menu
+    * Check "Enable Show Develop menu in menu bar"
+    * When the new option "Develop" appears in the menu, choose "Show Error Console"
 
 **[⬆ back to top](#topics)**
