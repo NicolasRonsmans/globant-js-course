@@ -1,2 +1,4 @@
 node_modules/
 temp/
+.project
+npm-debug.log
